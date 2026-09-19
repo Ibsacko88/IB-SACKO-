@@ -313,4 +313,3 @@ module.exports = {
     handleMessageRevocation,
     storeMessage
 };
-
