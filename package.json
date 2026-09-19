@@ -1,0 +1,25 @@
+{
+  "name": "ib-sacko",
+  "version": "1.0.0",
+  "description": "IB-SACKO — Bot WhatsApp sans préfixe — CENTRAL-HEX",
+  "main": "web.js",
+  "scripts": {
+    "start": "node web.js"
+  },
+  "keywords": ["whatsapp-bot", "ib-sacko", "central-hex"],
+  "author": "IB-SACKO",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^7.0.0-rc14",
+    "axios": "^1.8.4",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pino": "^8.21.0",
+    "qrcode": "^1.5.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
