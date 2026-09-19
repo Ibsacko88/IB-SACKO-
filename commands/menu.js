@@ -21,16 +21,16 @@ async function menuCommand(sock, chatId, message) {
 ║»✰ *⏰ ʜᴇᴜʀᴇ* : ${heure}
 ║»✰ *📅 ᴅᴀᴛᴇ* : ${date}
 ╚══════════════════✰
-               𝐂𝐄𝐍𝐓𝐑𝐀-𝐇𝐄𝐗
+       𝐂𝐄𝐍𝐓𝐑𝐀-𝐇𝐄𝐗
 ╔══════𝗚𝗘𝗡𝗘𝗥𝗔𝗟══════>
-║❒ menu → afficher le menu
+║❒ menu → le menu
 ║❒ ping → vitesse du bot
-║❒ owner → infos propriétaire
+║❒ owner → propriétaire
 ║❒ mode → public/privé
 ║❒ pair → code connexion
-║❒ antidelete → suppression des messages
-║❒ humm → capturer un média vue unique
-║❒ waouh → capturer un média vue unique
+║❒ antidelete → suppression
+║❒ humm → capturer moi
+║❒ waouh → capturer nous
 ╚══════════════════✰`;
 
     try {
