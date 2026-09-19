@@ -1,0 +1,21 @@
+# Référence pour déploiement via Koyeb CLI (optionnel — le dashboard Koyeb
+# détecte aussi automatiquement le Dockerfile si tu connectes le repo GitHub).
+name: ib-sacko
+services:
+  - name: web
+    type: web
+    instance_type: nano
+    regions:
+      - fra
+    ports:
+      - port: 3000
+        protocol: http
+    env:
+      - key: PORT
+        value: "3000"
+    routes:
+      - path: /
+        port: 3000
+
+
+
