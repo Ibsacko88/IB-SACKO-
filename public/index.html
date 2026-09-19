@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0F3D2E">
+<title>IB-SACKO — Connecte ton bot WhatsApp</title>
+<meta name="description" content="IB-SACKO — Bot WhatsApp sans préfixe, connecté en un lien. Système CENTRAL-HEX.">
+<style>
+  :root{
+    --dark:#0F3D2E;
+    --green:#16A34A;
+    --green-light:#22c55e;
+    --bg:#07120d;
+    --card:#0d1f17;
+    --card2:#122a1f;
+    --text:#eafff2;
+    --muted:#9fc9b3;
+    --line:rgba(255,255,255,.08);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Segoe UI",Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(1000px 500px at 15% -5%, rgba(22,163,74,.25), transparent 60%),
+      radial-gradient(900px 500px at 100% 10%, rgba(15,61,46,.5), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    min-height:100vh;
+  }
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(7,18,13,.75);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px;max-width:1080px;margin:0 auto;padding:0 20px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.02em;font-size:17px}
+  .brand img{width:34px;height:34px;border-radius:9px;object-fit:cover;border:1px solid var(--line)}
+  .brand span.tag{color:var(--green-light)}
+  .pill{
+    font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    background:rgba(22,163,74,.14);color:var(--green-light);
+    border:1px solid rgba(22,163,74,.35);
+    padding:6px 12px;border-radius:999px;
+  }
+
+  .hero{
+    max-width:1080px;margin:0 auto;padding:64px 20px 30px;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--green-light);
+    background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.3);
+    padding:7px 12px;border-radius:999px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green-light);box-shadow:0 0 10px var(--green-light)}
+  h1{font-size:clamp(32px,5vw,50px);line-height:1.05;margin:18px 0 12px;font-weight:900;letter-spacing:-.02em}
+  h1 .accent{color:var(--green-light)}
+  .lead{color:var(--muted);font-size:16px;max-width:520px;margin:0 0 26px}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+  .badge{
+    font-size:12.5px;font-weight:700;color:var(--text);
+    background:var(--card);border:1px solid var(--line);
+    padding:8px 13px;border-radius:11px;display:flex;align-items:center;gap:6px;
+  }
+  .hero-visual{position:relative;display:grid;place-items:center}
+  .frame{
+    width:min(300px,80vw);border-radius:24px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 30px 70px rgba(0,0,0,.5);
+    background:var(--card);
+  }
+  .frame img{width:100%;display:block}
+
+  section{max-width:1080px;margin:0 auto;padding:46px 20px}
+  .section-label{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--green-light);margin-bottom:8px}
+  h2{font-size:clamp(22px,3vw,30px);margin:0 0 8px;font-weight:900}
+  .section-intro{color:var(--muted);margin:0 0 26px;max-width:560px}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px;position:relative;
+  }
+  .step .num{position:absolute;top:14px;right:16px;color:var(--line);font-weight:900;font-size:26px}
+  .step .icon{font-size:26px;margin-bottom:10px}
+  .step h3{margin:0 0 6px;font-size:15px}
+  .step p{margin:0;color:var(--muted);font-size:13.5px}
+
+  .generator{
+    background:linear-gradient(180deg,var(--card2),var(--card));
+    border:1px solid var(--line);border-radius:22px;padding:26px;
+  }
+  .tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .tab{
+    flex:1;min-width:140px;padding:11px 14px;border-radius:12px;border:1px solid var(--line);
+    background:rgba(255,255,255,.03);color:var(--muted);font-weight:800;cursor:pointer;font-size:13.5px;
+    transition:.15s;
+  }
+  .tab.active{background:var(--green);color:#052712;border-color:var(--green)}
+  .field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:7px;font-weight:700}
+  .field input{
+    width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);
+    background:rgba(0,0,0,.25);color:var(--text);font-size:15px;outline:none;
+  }
+  .field input:focus{border-color:var(--green)}
+  .btn-primary{
+    margin-top:16px;width:100%;border:0;background:var(--green);color:#052712;
+    font-weight:900;border-radius:12px;padding:14px 18px;cursor:pointer;font-size:15px;
+    box-shadow:0 12px 26px rgba(22,163,74,.28);transition:.15s transform;
+  }
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-primary:disabled{opacity:.6;cursor:default;transform:none}
+  .result{
+    display:none;margin-top:20px;padding:20px;border-radius:14px;
+    background:rgba(0,0,0,.28);border:1px dashed rgba(22,163,74,.4);text-align:center;
+  }
+  .result.show{display:block}
+  .result strong{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .result code{
+    display:block;margin-top:10px;font-size:28px;font-weight:900;letter-spacing:.06em;
+    color:var(--green-light);word-break:break-all;
+  }
+  .result p{color:var(--muted);font-size:13px;margin:10px 0 0}
+
+  .faq-item{border-bottom:1px solid var(--line)}
+  .faq-q{
+    width:100%;text-align:left;background:none;border:0;color:var(--text);
+    font-weight:700;font-size:15px;padding:16px 0;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .faq-a{display:none;color:var(--muted);padding:0 0 16px;font-size:14px}
+  .faq-item.open .faq-a{display:block}
+  .faq-item.open .faq-q span{transform:rotate(180deg)}
+  .faq-q span{transition:.15s}
+
+  .channel-card{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:34px;
+  }
+  .channel-icon{
+    width:46px;height:46px;border-radius:12px;background:rgba(22,163,74,.15);
+    display:grid;place-items:center;font-size:20px;color:var(--green-light);flex-shrink:0;
+  }
+  .channel-copy span{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--green-light);text-transform:uppercase}
+  .channel-copy h3{margin:4px 0 2px;font-size:16px}
+  .channel-copy p{margin:0;color:var(--muted);font-size:13.5px}
+  .channel-btn{
+    margin-left:auto;background:var(--green);color:#052712;font-weight:800;
+    padding:11px 18px;border-radius:11px;white-space:nowrap;font-size:13.5px;
+  }
+
+  footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;color:var(--muted);font-size:13px}
+  footer span{color:var(--green-light);font-weight:800}
+
+  @media (max-width:820px){
+    .hero{grid-template-columns:1fr;text-align:center}
+    .lead{margin-left:auto;margin-right:auto}
+    .badges{justify-content:center}
+    .hero-visual{order:-1}
+    .steps{grid-template-columns:1fr}
+    .channel-btn{margin-left:0;width:100%;text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="nav">
+    <div class="brand"><img src="https://i.ibb.co/3yPMZMFJ/IMG-20260919-WA0035.jpg" alt="IB-SACKO"><span>IB-SACKO <span class="tag">· CENTRAL-HEX</span></span></div>
+    <div class="pill">🟢 24/24 · 7/7</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="eyebrow"><span class="dot"></span> Sans préfixe · Connexion en un lien</span>
+    <h1>Connecte ton bot WhatsApp <span class="accent">IB-SACKO</span> en quelques secondes</h1>
+    <p class="lead">Entre ton numéro, récupère ton code, colle-le dans WhatsApp — ton bot est actif immédiatement. Pas de panel, pas d'installation, juste un lien.</p>
+    <div class="badges">
+      <div class="badge">⚡ Sans préfixe</div>
+      <div class="badge">🔑 Code pair &amp; QR</div>
+      <div class="badge">🥷 menu · ping · owner · mode</div>
+      <div class="badge">🛡️ antidelete</div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="frame"><img src="https://i.ibb.co/3yPMZMFJ/IMG-20260919-WA0035.jpg" alt="IB-SACKO"></div>
+  </div>
+</section>
+
+<section id="comment">
+  <div class="section-label">// COMMENT ÇA MARCHE</div>
+  <h2>3 étapes, ton bot est en ligne</h2>
+  <p class="section-intro">Aucune installation nécessaire, tout se passe sur cette page.</p>
+  <div class="steps">
+    <article class="step"><div class="num">01</div><div class="icon">📱</div><h3>Entre ton numéro</h3><p>Ton numéro WhatsApp complet, avec l'indicatif pays, sans le signe +.</p></article>
+    <article class="step"><div class="num">02</div><div class="icon">🔗</div><h3>Colle le code</h3><p>WhatsApp → Appareils liés → Lier un appareil → Lier avec un numéro de téléphone.</p></article>
+    <article class="step"><div class="num">03</div><div class="icon">🚀</div><h3>C'est connecté !</h3><p>Le bot répond déjà. Tape <b>menu</b> (aucun préfixe) pour voir les commandes.</p></article>
+  </div>
+</section>
+
+<section id="session">
+  <div class="section-label">// CONNEXION</div>
+  <h2>Connecte ton numéro</h2>
+  <p class="section-intro">Choisis ta méthode de connexion préférée.</p>
+
+  <div class="generator">
+    <div class="tabs">
+      <button class="tab active" id="pairTab" onclick="switchMethod('pair')">🔑 CODE PAIR</button>
+      <button class="tab" id="qrTab" onclick="switchMethod('qr')">▣ QR CODE</button>
+    </div>
+
+    <div class="field">
+      <label>Numéro WhatsApp (avec indicatif, sans +)</label>
+      <input id="phone" type="tel" inputmode="numeric" placeholder="ex: 224621963059">
+    </div>
+    <button class="btn-primary" id="generateBtn" onclick="generateSession()">✨ OBTENIR LE CODE</button>
+
+    <div class="result" id="result">
+      <strong>Code de connexion</strong>
+      <code id="sessionValue"></code>
+      <p>Entre ce code dans WhatsApp → Appareils liés → Lier un appareil.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="section-label">// QUESTIONS FRÉQUENTES</div>
+  <h2>Des questions ?</h2>
+  <p class="section-intro">Les réponses les plus utiles.</p>
+
+  <div class="faq">
+    <div class="faq-item">
+      <button class="faq-q">Le bot fonctionne-t-il sans préfixe ? <span>⌄</span></button>
+      <div class="faq-a">Oui — IB-SACKO répond directement aux commandes (menu, ping, owner...) sans aucun symbole devant.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Mes données sont-elles en sécurité ? <span>⌄</span></button>
+      <div class="faq-a">Ta session WhatsApp est stockée uniquement sur le serveur qui héberge ce bot — jamais partagée avec un tiers.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Le bot reste-t-il actif 24/24 ? <span>⌄</span></button>
+      <div class="faq-a">Oui, tant que le serveur qui héberge le bot reste allumé — un système d'auto-ping intégré évite la mise en veille sur les hébergeurs gratuits.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Que faire si le code ne fonctionne pas ? <span>⌄</span></button>
+      <div class="faq-a">Vérifie le numéro et l'indicatif pays, assure-toi que WhatsApp est à jour, puis relance la procédure.</div>
+    </div>
+  </div>
+
+  <div class="channel-card">
+    <div class="channel-icon">◉</div>
+    <div class="channel-copy">
+      <span>Communauté officielle</span>
+      <h3>Rejoins la chaîne CENTRAL-HEX</h3>
+      <p>Annonces, mises à jour et nouveautés du système CENTRAL-HEX.</p>
+    </div>
+    <a class="channel-btn" href="https://whatsapp.com/channel/0029VbDCmVWISTkNEy1D3p3H" target="_blank" rel="noopener noreferrer">Rejoindre →</a>
+  </div>
+</section>
+
+<footer>
+  Propulsé par <span>IB-SACKO</span> · Système CENTRAL-HEX
+</footer>
+
+<script>
+  let method = "pair";
+  let pollTimer = null;
+
+  function stopPoll(){ if (pollTimer) clearInterval(pollTimer); }
+
+  function switchMethod(type){
+    method = type;
+    document.getElementById("pairTab").classList.toggle("active", type==="pair");
+    document.getElementById("qrTab").classList.toggle("active", type==="qr");
+    document.getElementById("generateBtn").textContent =
+      type==="pair" ? "✨ OBTENIR LE CODE" : "▣ GÉNÉRER LE QR CODE";
+    document.getElementById("result").classList.remove("show");
+    stopPoll();
+  }
+
+  function pollStatus(sessionId, onConnected){
+    stopPoll();
+    pollTimer = setInterval(async () => {
+      try {
+        const r = await fetch('/api/status/' + sessionId);
+        const data = await r.json();
+        if (data.status === 'connected') { stopPoll(); onConnected(); }
+      } catch (e) {}
+    }, 2500);
+  }
+
+  async function generateSession(){
+    const result = document.getElementById("result");
+    const value = document.getElementById("sessionValue");
+    const btn = document.getElementById("generateBtn");
+
+    result.classList.add("show");
+
+    if (method === "pair") {
+      const phone = document.getElementById("phone").value.replace(/\D/g,"");
+      if (phone.length < 8){
+        alert("Entre un numéro WhatsApp valide avec l'indicatif pays.");
+        return;
+      }
+
+      value.innerHTML = "⏳ Génération du code...";
+      btn.disabled = true;
+
+      try {
+        const r = await fetch('/api/pair', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ number: phone })
+        });
+        const data = await r.json();
+        btn.disabled = false;
+
+        if (data.error) { value.innerHTML = "❌ " + data.error; return; }
+        if (data.connected) {
+          value.innerHTML = "✅ Déjà connecté !";
+          result.querySelector("p").innerHTML = `Ce numéro est déjà lié à une session active.<br><br><button id="resetBtn" style="background:#e11d2e;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:700">🔌 Déconnecter ce numéro</button>`;
+          document.getElementById("resetBtn").onclick = async () => {
+            document.getElementById("resetBtn").disabled = true;
+            document.getElementById("resetBtn").textContent = "⏳ Déconnexion...";
+            try {
+              const rr = await fetch('/api/reset', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ number: phone })
+              });
+              const rdata = await rr.json();
+              if (rdata.ok) {
+                value.innerHTML = "🔌 Déconnecté";
+                result.querySelector("p").textContent = "Session supprimée. Clique à nouveau sur \"Obtenir le code\" pour relancer un pairing.";
+              } else {
+                result.querySelector("p").textContent = "❌ " + (rdata.error || "Erreur lors de la déconnexion.");
+              }
+            } catch (e) {
+              result.querySelector("p").textContent = "❌ Erreur de connexion au serveur.";
+            }
+          };
+          return;
+        }
+
+        value.textContent = data.code;
+        value.style.cursor = "pointer";
+        value.title = "Cliquer pour copier";
+        value.onclick = () => {
+          navigator.clipboard.writeText(data.code.replace(/-/g, ""));
+          result.querySelector("p").textContent = "📋 Code copié ! Colle-le dans WhatsApp → Appareils liés.";
+        };
+        result.querySelector("p").textContent = "Ouvre WhatsApp → Appareils liés → Lier un appareil → Lier avec un numéro de téléphone → entre ce code.";
+
+        pollStatus(data.sessionId, () => {
+          value.innerHTML = "✅ Connecté !";
+          result.querySelector("p").textContent = "Ton bot est actif, tu peux l'utiliser sur WhatsApp.";
+        });
+      } catch (e) {
+        btn.disabled = false;
+        value.innerHTML = "❌ Erreur de connexion au serveur.";
+      }
+
+    } else {
+      value.innerHTML = "⏳ Génération du QR...";
+      btn.disabled = true;
+
+      try {
+        const r = await fetch('/api/qr', { method: 'POST' });
+        const data = await r.json();
+        btn.disabled = false;
+        if (data.error) { value.innerHTML = "❌ " + data.error; return; }
+
+        stopPoll();
+        pollTimer = setInterval(async () => {
+          try {
+            const sr = await fetch('/api/status/' + data.sessionId);
+            const sdata = await sr.json();
+            if (sdata.qr) {
+              value.innerHTML = `<img src="${sdata.qr}" style="width:180px;border-radius:10px">`;
+              result.querySelector("p").textContent = "Scanne ce QR avec WhatsApp → Appareils liés.";
+            }
+            if (sdata.status === 'connected') {
+              stopPoll();
+              value.innerHTML = "✅ Connecté !";
+              result.querySelector("p").textContent = "Ton bot est actif, tu peux l'utiliser sur WhatsApp.";
+            }
+          } catch (e) {}
+        }, 2000);
+      } catch (e) {
+        btn.disabled = false;
+        value.innerHTML = "❌ Erreur de connexion au serveur.";
+      }
+    }
+
+    result.scrollIntoView({behavior:"smooth",block:"center"});
+  }
+
+  document.querySelectorAll(".faq-q").forEach(q=>{
+    q.addEventListener("click",()=>{ q.parentElement.classList.toggle("open"); });
+  });
+</script>
+</body>
+</html>
+
