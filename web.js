@@ -43,6 +43,7 @@ function sanitizeId(id) {
 }
 
 const connectingLock = new Set();
+const reconnectAttempts = {}; // { [id]: number } — pour le backoff exponentiel
 
 async function startUserSession(number, { usePairingCode = false } = {}) {
     const id = sanitizeId(number);
@@ -112,6 +113,7 @@ async function startUserSession(number, { usePairingCode = false } = {}) {
             sessions[id].status = 'connected';
             sessions[id].qr = null;
             sessions[id].code = null;
+            reconnectAttempts[id] = 0; // connexion réussie, on remet le compteur à zéro
             console.log(`✅ [${id}] IB-SACKO connecté (+${number}) !`);
 
             try {
@@ -147,10 +149,17 @@ async function startUserSession(number, { usePairingCode = false } = {}) {
             }
 
             if (shouldReconnect) {
-                setTimeout(() => startUserSession(number, { usePairingCode: false }), 3000);
+                // Backoff exponentiel : 3s, 6s, 12s, 24s... plafonné à 2 minutes.
+                // Évite les boucles de reconnexion rapprochées qui font grossir la
+                // mémoire (nouvelles sockets/listeners créés en rafale).
+                reconnectAttempts[id] = (reconnectAttempts[id] || 0) + 1;
+                const delay = Math.min(3000 * (2 ** (reconnectAttempts[id] - 1)), 120000);
+                console.log(`♻️ [${id}] Reconnexion dans ${Math.round(delay / 1000)}s (tentative ${reconnectAttempts[id]})...`);
+                setTimeout(() => startUserSession(number, { usePairingCode: false }), delay);
             } else {
                 console.log(`🚪 [${id}] Déconnecté (logout). Session supprimée.`);
                 sessions[id].status = 'logged_out';
+                delete reconnectAttempts[id];
                 try { fs.rmSync(sessionDir, { recursive: true, force: true }); } catch {}
             }
         }
