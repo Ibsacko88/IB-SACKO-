@@ -1,4 +1,4 @@
-Tuconst settings = require('../settings');
+const settings = require('../settings');
 
 const channelInfo = {
     forwardingScore: 1, isForwarded: true,
@@ -21,7 +21,7 @@ async function menuCommand(sock, chatId, message) {
 ║»✰ *⏰ ʜᴇᴜʀᴇ* : ${heure}
 ║»✰ *📅 ᴅᴀᴛᴇ* : ${date}
 ╚══════════════════✰
-     𝐂𝐄𝐍𝐓𝐑𝐀-𝐇𝐄𝐗
+    𝐂𝐄𝐍𝐓𝐑𝐀-𝐇𝐄𝐗
 ╔══════𝗚𝗘𝗡𝗘𝗥𝗔𝗟══════>
 ║❒ menu → le menu
 ║❒ ping → vitesse du bot
