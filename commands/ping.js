@@ -57,13 +57,6 @@ ${pingColor(ping)} *Ping     :* \`${ping} ms\`
 🌐 *Node.js  :* \`${process.version}\`
 
 ━━━━━━━━━━━━━━━━━━━━━━
-💾 *RAM* — ${ramUsed}/${ramTotal} MB
-\`[${bar(parseInt(ramPct))}]\` *${ramPct}%*
-
-🖥️ *CPU Load* — ${cpu}
-\`[${bar(cpuPct)}]\` *~${cpuPct}%*
-
-━━━━━━━━━━━━━━━━━━━━━━
 ┌─────────────────────
 │ ✅ Statut  : *En ligne*
 │ 🌍 Mode    : *${settings.commandMode || 'Public'}*
@@ -74,7 +67,7 @@ ${pingColor(ping)} *Ping     :* \`${ping} ms\`
 > _Propulsé par 🥷 *IB-SACKO*_`;
 
         await sock.sendMessage(chatId, {
-            image: { url: BOT_IMAGE },
+            image: { url: BOT_IMAGE }
             caption,
             contextInfo: channelInfo
         }, { quoted: message });
